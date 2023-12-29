@@ -15,6 +15,9 @@ export default function Home() {
   );
 
   const shuffleCards = () => {
+    /**
+     * this is always making a new one and not the same one, we should eventually run out of cards if it is using the same one.
+     */
     let currentResources: ResourceDecks = {
       mainDeck: shuffleListItems(resourceCardStack.mainDeck),
       discardPile: resourceCardStack.market,
