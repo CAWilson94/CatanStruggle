@@ -100,9 +100,17 @@ export interface ResourceDecks {
     mainDeck: string[],
 }
 
-const marketBaseDeck = (marketDeck: string[]): ResourceDecks => {
+export const marketBaseDeck = (marketDeck: string[]): ResourceDecks => {
     let deck: string[] = marketDeck;
     let market: string[] = shuffleListItems(marketDeck).splice(0, 5); 
     let discard: string[] = [];
     return {market: market, discardPile: discard, mainDeck: deck};
 };
+
+/**
+ * When we shuffle the market we need to 
+ * 1. Put the cards back into the main deck, at the bottom 
+ * 2. and then take the top five from the main deck 
+ * 3. should then have new market cards and probably a diff top main deck card. 
+ * 
+ */
