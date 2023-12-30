@@ -19,10 +19,13 @@ export default function Home() {
     const shuffledMainDeck = shuffleListItems(resourceCardStack.mainDeck);
     const newMarket = shuffledMainDeck.slice(0, 5);
     const updatedMainDeck = shuffledMainDeck.slice(5);
-  
+
     const currentResources: ResourceDecks = {
       mainDeck: updatedMainDeck,
-      discardPile: [...resourceCardStack.discardPile, ...resourceCardStack.market],
+      discardPile: [
+        ...resourceCardStack.discardPile,
+        ...resourceCardStack.market,
+      ],
       market: newMarket,
     };
     setResourceCardStack(currentResources);
@@ -58,6 +61,8 @@ export default function Home() {
               Refresh Cards
             </button>
           </div>
+        </div>
+        <div className="flex flex-row">
           <div>
             <div className="discard-pile">
               <Card
@@ -66,28 +71,32 @@ export default function Home() {
               />
               <style jsx>{`
                 .discard-pile {
-                  display: flex;
-                  flex-wrap: wrap;
-                  justify-content: start;
                   padding: 16px;
+                  padding-top: 60px;
                 }
               `}</style>
+              <h1 className="px-4 pt-6 font-bold text-xl mb-2 ml-1">Discard</h1>
             </div>
-            <h1 className="px-6 font-bold text-xl mb-2 ml-1">Discard Pile</h1>
+            
           </div>
-        </div>
-        <div className="main-deck">
-          <Card
-            description={resourceCardStack.mainDeck[0] as string}
-            imagePath={`${resourceCardStack.mainDeck[0]}.jpeg`}
-          />
-          <style jsx>{`
-            .main-deck {
-              padding-top: 60px;
-            }
-          `}</style>
+          <div className="main-deck">
+            <Card
+              description={resourceCardStack.mainDeck[0] as string}
+              imagePath={`${resourceCardStack.mainDeck[0]}.jpeg`}
+            />
+            <style jsx>{`
+              .main-deck {
+                padding-top: 60px;
+              }
+            `}</style>
+            <h1 className="px-4 pt-6 font-bold text-xl mb-2 ml-1">Draw</h1>
+          </div>
         </div>
       </div>
     </main>
   );
+  /**
+   * Next task -- move discard pile to the left of the draw pile, label both piles.
+   * So they need to be in their own column based thing?
+   */
 }
