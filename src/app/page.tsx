@@ -1,5 +1,4 @@
 "use client";
-
 import Card from "@/components/Card";
 import {
   ResourceDecks,
@@ -10,18 +9,21 @@ import { shuffleListItems } from "@/utils/utils";
 import { useState } from "react";
 
 export default function Home() {
-  const [resourceCardStack, setResourceCardStack] = useState(
-    marketBaseDeck(baseResourceCards)
+  const initialMarket: string[] = baseResourceCards;
+
+  const [resourceCardStack, setResourceCardStack] = useState<ResourceDecks>(
+    marketBaseDeck(initialMarket)
   );
 
   const shuffleCards = () => {
-    /**
-     * this is always making a new one and not the same one, we should eventually run out of cards if it is using the same one.
-     */
-    let currentResources: ResourceDecks = {
-      mainDeck: shuffleListItems(resourceCardStack.mainDeck),
-      discardPile: resourceCardStack.market,
-      market: resourceCardStack.mainDeck.splice(0, 5),
+    const shuffledMainDeck = shuffleListItems(resourceCardStack.mainDeck);
+    const newMarket = shuffledMainDeck.slice(0, 5);
+    const updatedMainDeck = shuffledMainDeck.slice(5);
+  
+    const currentResources: ResourceDecks = {
+      mainDeck: updatedMainDeck,
+      discardPile: [...resourceCardStack.discardPile, ...resourceCardStack.market],
+      market: newMarket,
     };
     setResourceCardStack(currentResources);
   };

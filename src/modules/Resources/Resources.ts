@@ -39,36 +39,20 @@ const createKnightCards = (): KnightCard<"A" | "B">[] => {
   return [...knightCardsA, ...knightCardsB];
 };
 
+const createResourceCardArray = (
+  length: number,
+  resourceName: string
+): string[] => {
+  return Array.from({ length }, (_, index) => resourceName);
+};
+
 const createBaseGameResourceCards = (): string[] => {
-  const createResourceCardArray = (
-    length: number,
-    resourceName: string
-  ): string[] => {
-    return Array.from({ length }, (_, index) => resourceName);
-  };
-  const brickResources: string[] = createResourceCardArray(
-    11,
-    ResourceCard.Brick
-  );
-  const woodResources: string[] = createResourceCardArray(
-    11,
-    ResourceCard.Wood
-  );
-  const sheepResources: string[] = createResourceCardArray(
-    15,
-    ResourceCard.Sheep
-  );
-  const wheatResources: string[] = createResourceCardArray(
-    15,
-    ResourceCard.Wheat
-  );
-  const OreResources: string[] = createResourceCardArray(15, ResourceCard.Ore);
   return [
-    ...brickResources,
-    ...woodResources,
-    ...sheepResources,
-    ...wheatResources,
-    ...OreResources,
+    ...createResourceCardArray(11, ResourceCard.Brick),
+    ...createResourceCardArray(11, ResourceCard.Wood),
+    ...createResourceCardArray(15, ResourceCard.Sheep),
+    ...createResourceCardArray(15, ResourceCard.Wheat),
+    ...createResourceCardArray(15, ResourceCard.Ore),
   ];
 };
 
@@ -90,27 +74,27 @@ export const allCards: AllCards[] = [
  * deck = n lenth
  * market --> shuffle the deck, take top 5 cards.
  * deck --> should still have the last n - 5 cards left
- * create empty discard pile to be used. 
+ * create empty discard pile to be used.
  * Can we make sure its the same deck and not new instantiations?
  */
 
-export interface ResourceDecks { 
-    market: string[], 
-    discardPile: string[], 
-    mainDeck: string[],
+export interface ResourceDecks {
+  market: string[];
+  discardPile: string[];
+  mainDeck: string[];
 }
 
 export const marketBaseDeck = (marketDeck: string[]): ResourceDecks => {
-    let deck: string[] = marketDeck;
-    let market: string[] = shuffleListItems(marketDeck).splice(0, 5); 
-    let discard: string[] = [];
-    return {market: market, discardPile: discard, mainDeck: deck};
+  let deck: string[] = shuffleListItems(marketDeck);
+  let market: string[] = deck.slice(0, 5);
+  let discard: string[] = [];
+  return { market: market, discardPile: discard, mainDeck: deck };
 };
 
 /**
- * When we shuffle the market we need to 
- * 1. Put the cards back into the main deck, at the bottom 
- * 2. and then take the top five from the main deck 
- * 3. should then have new market cards and probably a diff top main deck card. 
- * 
+ * When we shuffle the market we need to
+ * 1. Put the cards back into the main deck, at the bottom
+ * 2. and then take the top five from the main deck
+ * 3. should then have new market cards and probably a diff top main deck card.
+ *
  */
